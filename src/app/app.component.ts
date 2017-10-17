@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { Hero } from './shared/models/hero';
+import { BacklogService } from './modules/backlog/backlog.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+      <router-outlet></router-outlet>
+    `
 })
-export class AppComponent {
-  title = 'app';
-}
+export class AppComponent { }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BacklogPageComponent } from './modules/backlog/pages/backlog.page';
+import { BacklogPageComponent } from './modules/backlog/pages/backlog/backlog.page.component';
+
 // import { PageComponent } from './templates/components/page/page.component';
 
 // import { AuthGuard } from "./services/auth-guard.service";

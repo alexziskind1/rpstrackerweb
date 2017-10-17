@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
-import { LoginModel } from '../../shared/models/login.model';
-import { User } from '../../shared/models/user.model';
 import { StorageService } from './storage.service';
+import { PtUser } from '../../shared/models/domain';
+import { PtLoginModel } from '../../shared/models';
 
 const AUTH_TOKEN_KEY = 'AUTH_TOKEN_KEY';
 
@@ -18,10 +18,9 @@ export class AuthService {
         return !!this.storageService.getItem(AUTH_TOKEN_KEY);
     }
 
-    login(loginModel: LoginModel): Observable<User> {
-        return of(<User>{
-            firstName: 'Alex',
-            lastName: 'Ziskind',
+    login(loginModel: PtLoginModel): Observable<PtUser> {
+        return of(<PtUser>{
+            fullName: 'Alex Ziskind'
         });
     }
 }
