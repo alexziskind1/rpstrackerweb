@@ -43,10 +43,6 @@ export class BacklogService {
         private zone: NgZone
     ) { }
 
-    public getHeroes() {
-        return HEROES;
-    }
-
     public fetchItems() {
         this.http.get(this.filteredBacklogUrl)
             .map(res => res.json())
@@ -63,10 +59,3 @@ export class BacklogService {
             });
     }
 }
-
-const HEROES = [
-    new Hero(1, 'Windstorm'),
-    new Hero(13, 'Bombasto'),
-    new Hero(15, 'Magneta'),
-    new Hero(20, 'Tornado')
-];

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Hero } from '../../../../shared/models/hero';
+import { PtItem } from '../../../../shared/models/domain';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { Hero } from '../../../../shared/models/hero';
 })
 export class PtListItemComponent implements OnInit {
 
-    @Input() hero: Hero;
+    @Input() item: PtItem;
 
     constructor() { }
 

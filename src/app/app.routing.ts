@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BacklogPageComponent } from './modules/backlog/pages/backlog/backlog.page.component';
+import { DetailPageComponent } from './modules/backlog/pages/detail/detail.page.component';
 
 // import { PageComponent } from './templates/components/page/page.component';
 
@@ -24,6 +25,25 @@ const routes: Routes = [
     {
         path: 'backlog',
         component: BacklogPageComponent
+        /*children: [
+            { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+            {
+                path: 'dashboard',
+                loadChildren: './+dashboard/dashboard.module#DashboardModule'
+            },
+            {
+                path: 'settings',
+                loadChildren: './+settings/settings.module#SettingsModule'
+            },
+            {
+                path: 'profile',
+                loadChildren: './+profile/profile.module#ProfileModule'
+            }
+        ]*/
+    },
+    {
+        path: 'detail/:id',
+        component: DetailPageComponent
         /*children: [
             { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
             {

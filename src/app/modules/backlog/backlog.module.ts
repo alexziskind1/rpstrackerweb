@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { BacklogService } from './backlog.service';
+
 import { BacklogPageComponent } from './pages/backlog/backlog.page.component';
 import { DetailPageComponent } from './pages/detail/detail.page.component';
-import { PtListComponent } from './components/backlog/pt-list.component';
-import { PtListItemComponent } from './components/backlog/pt-list-item.component';
-import { BacklogService } from './backlog.service';
+import { PtListComponent, PtListItemComponent } from './components/backlog';
+import { PtItemDetailsComponent, PtItemChitchatComponent, PtItemTasksComponent } from './components/detail';
+
+
 
 
 
@@ -18,7 +21,10 @@ import { BacklogService } from './backlog.service';
         BacklogPageComponent,
         DetailPageComponent,
         PtListComponent,
-        PtListItemComponent
+        PtListItemComponent,
+        PtItemDetailsComponent,
+        PtItemChitchatComponent,
+        PtItemTasksComponent
     ],
     providers: [
         BacklogService

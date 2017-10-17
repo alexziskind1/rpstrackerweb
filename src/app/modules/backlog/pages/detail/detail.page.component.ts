@@ -6,7 +6,20 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class DetailPageComponent implements OnInit {
+
+    public selectedDetailsScreenIndex = 0;
+
     constructor() { }
 
-    ngOnInit() { }
+    public ngOnInit() { }
+
+    public onDetailsTap(args) {
+        this.selectedDetailsScreenIndex = 0;
+    }
+    public onTasksTap(args) {
+        this.selectedDetailsScreenIndex = 1;
+    }
+    public onChitchatTap(args) {
+        this.selectedDetailsScreenIndex = 2;
+    }
 }

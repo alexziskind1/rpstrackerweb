@@ -1,5 +1,5 @@
 <ul>
-    <li *ngFor="let hero of heroes">
-        <pt-list-item [hero]="hero"></pt-list-item>
+    <li *ngFor="let item of items" (click)="listItemTap($event, item)">
+        <pt-list-item [item]="item"></pt-list-item>
     </li>
 </ul>

@@ -1,0 +1,11 @@
+<h1>detail</h1>
+
+<button (click)="onDetailsTap($event)">details</button>
+<button (click)="onTasksTap($event)">tasks</button>
+<button (click)="onChitchatTap($event)">chitchat</button>
+
+<div>
+    <pt-item-details *ngIf="selectedDetailsScreenIndex=== 0"></pt-item-details>
+    <pt-item-tasks *ngIf="selectedDetailsScreenIndex=== 1"></pt-item-tasks>
+    <pt-item-chitchat *ngIf="selectedDetailsScreenIndex=== 2"></pt-item-chitchat>
+</div>
