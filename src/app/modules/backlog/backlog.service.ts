@@ -19,22 +19,22 @@ import { PriorityEnum, StatusEnum } from '../../shared/enums';
 @Injectable()
 export class BacklogService {
 
-    private get filterIndex() {
-        return this.store.value.selectedViewIndex;
+    private get currentPreset() {
+        return this.store.value.selectedPreset;
     }
 
     private get filteredBacklogUrl() {
-        switch (this.filterIndex.idx) {
-            case 0:
+        switch (this.currentPreset) {
+            case 'my':
                 const user = this.store.value.currentUser;
                 if (user) {
                     return `${this.config.apiEndpoint}/myItems?userId=${this.store.value.currentUser.id}`;
                 } else {
                     return `${this.config.apiEndpoint}/backlog`;
                 }
-            case 1:
+            case 'open':
                 return `${this.config.apiEndpoint}/openItems`;
-            case 2:
+            case 'closed':
                 return `${this.config.apiEndpoint}/closedItems`;
             default:
                 return `${this.config.apiEndpoint}/backlog`;

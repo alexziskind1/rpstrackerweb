@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -7,7 +8,7 @@ import { Store } from '../../../../core/app-store';
 import { PtItem } from '../../../../shared/models/domain';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { PtNewItem } from '../../../../shared/models';
-
+import { Preset } from '../../../../shared/models/ui';
 
 
 @Component({
@@ -17,19 +18,29 @@ import { PtNewItem } from '../../../../shared/models';
 export class BacklogPageComponent implements OnInit {
 
     public items$: Observable<PtItem[]>;
-    public selectedViewIndex$: Observable<number> = this.store.select<number>('selectedViewIndex');
+
+    public selectedPreset$: Observable<Preset> = this.store.select<Preset>('selectedPreset');
 
     public showAddItemDialog = false;
 
     constructor(
+        private activatedRoute: ActivatedRoute,
         private navigationService: NavigationService,
         private backlogService: BacklogService,
         private store: Store
     ) { }
 
     public ngOnInit() {
+        this.activatedRoute.params.subscribe(params => {
+            var reqPreset = params['preset'];
+            if (reqPreset) {
+                this.store.set('selectedPreset', reqPreset);
+            }
+        });
+
         this.items$ = this.store.select<PtItem[]>('backlogItems');
-        this.selectedViewIndex$.subscribe(next => {
+
+        this.selectedPreset$.subscribe(next => {
             this.backlogService.fetchItems();
         });
     }

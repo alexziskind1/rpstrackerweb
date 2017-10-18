@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewIndex } from '../../models/ui';
+import { Preset } from '../../models/ui';
 import { Store } from '../../../core/app-store';
+import { NavigationService } from '../../../core/services/navigation.service';
 
 @Component({
     selector: 'pt-menu',
@@ -8,13 +9,15 @@ import { Store } from '../../../core/app-store';
 })
 export class MenuComponent implements OnInit {
 
-    constructor(private store: Store) { }
+    constructor(
+        private store: Store,
+        private navigationService: NavigationService
+    ) { }
 
     public ngOnInit() { }
 
-
-    public selectFilteredView(itemFilterIndex: number) {
-        this.store.set<ViewIndex>('selectedViewIndex', { idx: itemFilterIndex });
+    public selectPreset(preset: Preset) {
+        this.navigationService.navigate(['/backlog', preset]);
     }
 
 }

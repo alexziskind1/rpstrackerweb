@@ -14,8 +14,13 @@ export const authProviders = [
 const routes: Routes = [
     {
         path: '',
-        redirectTo: '/backlog',
+        redirectTo: '/backlog/open',
         // redirectTo: '/app/profile',
+        pathMatch: 'full'
+    },
+    {
+        path: 'backlog',
+        redirectTo: '/backlog/open',
         pathMatch: 'full'
     },
     /*{
@@ -23,7 +28,7 @@ const routes: Routes = [
         loadChildren: './+auth/auth.module#AuthModule'
     },*/
     {
-        path: 'backlog',
+        path: 'backlog/:preset',
         component: BacklogPageComponent
         /*children: [
             { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
