@@ -1,1 +1,7 @@
 <h2>Pt item chichat</h2>
+
+<ul>
+    <li *ngFor="let comment of comments$ | async">
+        <span>{{ comment.title }}</span>
+    </li>
+</ul>

@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { PtItem } from '../../../../shared/models/domain';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
     selector: 'pt-item-details',
-    templateUrl: 'pt-item-details.component.html'
+    templateUrl: 'pt-item-details.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class PtItemDetailsComponent implements OnInit {
