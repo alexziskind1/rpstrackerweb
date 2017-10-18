@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { PtItem } from '../../../../shared/models/domain';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
     selector: 'pt-item-details',
@@ -6,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class PtItemDetailsComponent implements OnInit {
+    @Input() public set item(val: PtItem) {
+        this.item$.next(val);
+    }
+    public item$ = new BehaviorSubject<PtItem>(null);
+
     constructor() { }
 
-    ngOnInit() { }
+    public ngOnInit() { }
 }

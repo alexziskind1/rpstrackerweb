@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppConfigModule } from './app-config.module';
@@ -12,6 +13,7 @@ import { CoreModule } from './core/core.module';
 import { Store } from './core/app-store';
 
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -19,6 +21,7 @@ import { Store } from './core/app-store';
   imports: [
     BrowserModule,
     CommonModule,
+    FormsModule,
     RouterModule,
     HttpModule,
 

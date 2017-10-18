@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -57,5 +58,10 @@ export class BacklogService {
 
                 this.store.set('backlogItems', data);
             });
+    }
+
+    public getItem(id: number) {
+        let selectedItem = _.find(this.store.value.backlogItems, i => i.id === id);
+        return Promise.resolve(selectedItem);
     }
 }

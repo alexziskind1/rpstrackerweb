@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { Hero } from './shared/models/hero';
 import { BacklogService } from './modules/backlog/backlog.service';
+import { AuthService } from './core/services/auth.service';
+import { Store } from './core/app-store';
+import { PtUser } from './shared/models/domain';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +10,10 @@ import { BacklogService } from './modules/backlog/backlog.service';
       <router-outlet></router-outlet>
     `
 })
-export class AppComponent { }
+export class AppComponent {
+  constructor(
+    private authService: AuthService
+  ) {
+    authService.login({ username: 'alex', password: 'nuvious' });
+  }
+}

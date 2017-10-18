@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { PtItem } from '../../../../shared/models/domain';
 
 @Component({
     selector: 'pt-item-tasks',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class PtItemTasksComponent implements OnInit {
+
+    @Input() public item: PtItem;
+
     constructor() { }
 
-    ngOnInit() { }
+    public ngOnInit() { }
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { PtItem } from '../../../../shared/models/domain';
 
 @Component({
     selector: 'pt-item-chitchat',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class PtItemChitchatComponent implements OnInit {
+    @Input() public item: PtItem;
+
     constructor() { }
 
-    ngOnInit() { }
+    public ngOnInit() { }
 }
