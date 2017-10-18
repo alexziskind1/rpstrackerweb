@@ -1,0 +1,13 @@
+<div>
+    <label>Title</label>
+    <input [(ngModel)]="newItem.title" />
+</div>
+
+<div>
+    <label>Description</label>
+    <input [(ngModel)]="newItem.description" />
+</div>
+
+<div>
+    <button (click)="onDoneTap($event)" [disabled]="isBtnDoneDisabled" class="btn">Done</button>
+</div>

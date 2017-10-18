@@ -6,6 +6,7 @@ import { BacklogService } from '../../backlog.service';
 import { Store } from '../../../../core/app-store';
 import { PtItem } from '../../../../shared/models/domain';
 import { NavigationService } from '../../../../core/services/navigation.service';
+import { PtNewItem } from '../../../../shared/models';
 
 
 
@@ -17,6 +18,8 @@ export class BacklogPageComponent implements OnInit {
 
     public items$: Observable<PtItem[]>;
     public selectedViewIndex$: Observable<number> = this.store.select<number>('selectedViewIndex');
+
+    public showAddItemDialog = false;
 
     constructor(
         private navigationService: NavigationService,
@@ -34,5 +37,20 @@ export class BacklogPageComponent implements OnInit {
     public selectListItem(item: PtItem) {
         console.log('item sell: ' + item.title);
         this.navigationService.navigate(['/detail', item.id]);
+    }
+
+    public onAddTap(args) {
+        this.showAddItemDialog = !this.showAddItemDialog;
+    }
+
+    public onAddDialogCloseTap(args) {
+        this.showAddItemDialog = !this.showAddItemDialog;
+    }
+
+    public onNewItemFormDone(newItem: PtNewItem) {
+        if (newItem != null) {
+            this.backlogService.addNewPtItem(newItem, this.store.value.currentUser);
+        }
+        this.showAddItemDialog = !this.showAddItemDialog;
     }
 }

@@ -9,9 +9,11 @@ import { Http } from '@angular/http';
 import { AppConfig, APP_CONFIG } from '../../app-config.module';
 import { Hero } from '../../shared/models/hero';
 import { Store } from '../../core/app-store';
-import { PtItem } from '../../shared/models/domain';
+import { PtItem, PtUser } from '../../shared/models/domain';
 import { ErrorHandlerService } from '../../core/services/error-handler.service';
 import { ObservableInput } from 'rxjs/Observable';
+import { PtNewItem } from '../../shared/models';
+import { PriorityEnum, StatusEnum } from '../../shared/enums';
 
 
 @Injectable()
@@ -51,6 +53,10 @@ export class BacklogService {
         return `${this.config.apiEndpoint}/item/${itemId}`;
     }
 
+    private postSingleItemUrl() {
+        return `${this.config.apiEndpoint}/item`;
+    }
+
     public fetchItems() {
         this.http.get(this.filteredBacklogUrl)
             .map(res => res.json())
@@ -75,5 +81,36 @@ export class BacklogService {
                     this.store.set('currentSelectedItem', data);
                 });
         }
+    }
+
+    public addNewPtItem(newItem: PtNewItem, assignee: PtUser) {
+        const item: PtItem = {
+            id: 0,
+            title: newItem.title,
+            description: newItem.description,
+            type: newItem.type,
+            estimate: 0,
+            priority: PriorityEnum.Medium,
+            status: StatusEnum.Open,
+            assignee: assignee,
+            tasks: [],
+            comments: [],
+            dateCreated: new Date(),
+            dateModified: new Date()
+        };
+        this.addItem(item);
+    }
+
+    public addItem(item: PtItem) {
+        this.http.post(
+            this.postSingleItemUrl(),
+            { item: item }
+        )
+            .map(res => res.json())
+            .catch(this.errorHandlerService.handleHttpError)
+            .subscribe(next => {
+                this.fetchItems();
+                console.log(next);
+            });
     }
 }

@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { MenuComponent } from './components/menu/menu.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 
 @NgModule({
-    imports: [],
+    imports: [
+        CommonModule
+    ],
     exports: [
-        MenuComponent
+        MenuComponent,
+        DialogComponent
     ],
     declarations: [
-        MenuComponent
+        MenuComponent,
+        DialogComponent
     ],
     providers: [],
 })

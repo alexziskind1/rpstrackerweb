@@ -1,4 +1,14 @@
 <pt-menu></pt-menu>
 <h1>Backlog</h1>
 
+<button (click)="onAddTap($event)" class="btn">Add</button>
+
+<app-dialog [(visible)]="showAddItemDialog">
+    <h1>Add Item</h1>
+
+    <pt-new-item-form (onFormDone)="onNewItemFormDone($event)"></pt-new-item-form>
+
+    <button (click)="onAddDialogCloseTap($event)" class="btn">Close</button>
+</app-dialog>
+
 <pt-list [items]="items$ | async" (listItemSelected)="selectListItem($event)"></pt-list>
