@@ -21,9 +21,8 @@ export class BacklogPageComponent implements OnInit {
     constructor(
         private navigationService: NavigationService,
         private backlogService: BacklogService,
-        private store: Store) {
-
-    }
+        private store: Store
+    ) { }
 
     public ngOnInit() {
         this.items$ = this.store.select<PtItem[]>('backlogItems');

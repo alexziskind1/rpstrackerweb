@@ -8,6 +8,7 @@ import { StorageService } from './services/storage.service';
 import { StorageWebService } from './services/web/storage-web.service';
 import { APP_CONFIG, AppConfig } from '../app-config.module';
 import { NavigationService } from './services/navigation.service';
+import { ErrorHandlerService } from './services/error-handler.service';
 
 
 
@@ -18,7 +19,8 @@ import { NavigationService } from './services/navigation.service';
     providers: [
         AuthService,
         LoggerService,
-        NavigationService
+        NavigationService,
+        ErrorHandlerService
     ]
 })
 export class CoreModule {
