@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, RequestOptionsArgs, Headers } from "@angular/http";
+import { Http, RequestOptionsArgs, Headers } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -16,7 +16,7 @@ const AUTH_TOKEN_KEY = 'AUTH_TOKEN_KEY';
 @Injectable()
 export class AuthService {
 
-    private get authUrl() { return `${this.config.apiEndpoint}/auth` }
+    private get authUrl() { return `${this.config.apiEndpoint}/auth`; }
 
     get token(): PtAuthToken {
         const t = this.storageService.getItem(AUTH_TOKEN_KEY);
@@ -45,7 +45,7 @@ export class AuthService {
     }
 
     private loginInternal(user: PtLoginModel) {
-        let headers = new Headers();
+        const headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
         return this.http.post(

@@ -1,0 +1,12 @@
+{
+    "menu": {
+        "login": "Login ME",
+        "home": "Home"
+    },
+    "login": {
+        "title": "Login IN"
+    },
+    "home": {
+        "title": "Home"
+    }
+}

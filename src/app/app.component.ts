@@ -14,6 +14,6 @@ export class AppComponent {
   constructor(
     private authService: AuthService
   ) {
-    authService.login({ username: 'alex', password: 'nuvious' });
+    // authService.login({ username: 'alex', password: 'nuvious' });
   }
 }

@@ -10,14 +10,17 @@ import { NavigationService } from '../../../core/services/navigation.service';
 export class MenuComponent implements OnInit {
 
     constructor(
-        private store: Store,
         private navigationService: NavigationService
     ) { }
 
     public ngOnInit() { }
 
-    public selectPreset(preset: Preset) {
+    public onSelectPresetTap(preset: Preset) {
         this.navigationService.navigate(['/backlog', preset]);
+    }
+
+    public onLogoutTap(args) {
+        this.navigationService.navigate(['/logout']);
     }
 
 }
