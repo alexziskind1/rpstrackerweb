@@ -5,7 +5,7 @@
 <button (click)="onChitchatTap($event)">chitchat</button>
 
 <div>
-    <pt-item-details [item]="item$ | async" *ngIf="selectedDetailsScreenIndex=== 0"></pt-item-details>
-    <pt-item-tasks [item]="item$ | async" *ngIf="selectedDetailsScreenIndex=== 1"></pt-item-tasks>
-    <pt-item-chitchat [item]="item$ | async" *ngIf="selectedDetailsScreenIndex=== 2"></pt-item-chitchat>
+    <pt-item-details [item]="currentSelectedItem$ | async" *ngIf="selectedDetailsScreenIndex=== 0"></pt-item-details>
+    <pt-item-tasks [item]="currentSelectedItem$ | async" (addNewTask)="onAddNewTask($event)" *ngIf="selectedDetailsScreenIndex=== 1"></pt-item-tasks>
+    <pt-item-chitchat [item]="currentSelectedItem$ | async" *ngIf="selectedDetailsScreenIndex=== 2"></pt-item-chitchat>
 </div>

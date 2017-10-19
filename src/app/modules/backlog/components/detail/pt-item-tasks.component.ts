@@ -1,7 +1,9 @@
+import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { PtItem, PtTask } from '../../../../shared/models/domain';
+import { PtNewTask } from '../../../../shared/models';
 
 
 @Component({
@@ -13,11 +15,28 @@ import { PtItem, PtTask } from '../../../../shared/models/domain';
 export class PtItemTasksComponent implements OnInit {
 
     @Input() public set item(val: PtItem) {
-        this.tasks$.next(val.tasks);
+        this.tasks = val.tasks;
     }
-    public tasks$ = new BehaviorSubject<PtTask[]>(null);
+    @Output() addNewTask = new EventEmitter<PtNewTask>();
+
+    public tasks: PtTask[] = [];
+
+    public newTaskTitle: string = '';
 
     constructor() { }
 
     public ngOnInit() { }
+
+    public onAddTapped(args) {
+        let newTitle = this.newTaskTitle.trim();
+        if (newTitle.length === 0)
+            return;
+        let newTask: PtNewTask = {
+            title: newTitle,
+            completed: false
+        };
+        this.addNewTask.emit(newTask);
+        this.newTaskTitle = '';
+        //newTaskTV.dismissSoftInput();
+    }
 }

@@ -9,10 +9,10 @@ import { Http } from '@angular/http';
 import { AppConfig, APP_CONFIG } from '../../app-config.module';
 import { Hero } from '../../shared/models/hero';
 import { Store } from '../../core/app-store';
-import { PtItem, PtUser } from '../../shared/models/domain';
+import { PtItem, PtUser, PtTask } from '../../shared/models/domain';
 import { ErrorHandlerService } from '../../core/services/error-handler.service';
 import { ObservableInput } from 'rxjs/Observable';
-import { PtNewItem } from '../../shared/models';
+import { PtNewItem, PtNewTask } from '../../shared/models';
 import { PriorityEnum, StatusEnum } from '../../shared/enums';
 
 
@@ -57,6 +57,10 @@ export class BacklogService {
         return `${this.config.apiEndpoint}/item`;
     }
 
+    private postSingleTaskUrl() {
+        return `${this.config.apiEndpoint}/task`;
+    }
+
     public fetchItems() {
         this.http.get(this.filteredBacklogUrl)
             .map(res => res.json())
@@ -98,10 +102,23 @@ export class BacklogService {
             dateCreated: new Date(),
             dateModified: new Date()
         };
-        this.addItem(item);
+        this._addItem(item);
     }
 
-    public addItem(item: PtItem) {
+
+
+    public addNewPtTask(newTask: PtNewTask, currentItem: PtItem) {
+        const task: PtTask = {
+            id: 0,
+            title: newTask.title,
+            completed: false,
+            dateCreated: new Date(),
+            dateModified: new Date()
+        };
+        this._addTask(task, currentItem);
+    }
+
+    private _addItem(item: PtItem) {
         this.http.post(
             this.postSingleItemUrl(),
             { item: item }
@@ -109,7 +126,19 @@ export class BacklogService {
             .map(res => res.json())
             .catch(this.errorHandlerService.handleHttpError)
             .subscribe(next => {
-                this.fetchItems();
+                this.store.set('backlogItems', [...this.store.value.backlogItems, next]);
+            });
+    }
+
+    private _addTask(task: PtTask, currentItem: PtItem) {
+        this.http.post(
+            this.postSingleTaskUrl(),
+            { task: task, itemId: currentItem.id }
+        )
+            .map(res => res.json())
+            .catch(this.errorHandlerService.handleHttpError)
+            .subscribe(next => {
+                this.getItem(currentItem.id);
                 console.log(next);
             });
     }

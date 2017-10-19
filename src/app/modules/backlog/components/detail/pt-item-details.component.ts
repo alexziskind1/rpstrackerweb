@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 })
 
 export class PtItemDetailsComponent implements OnInit {
+
     @Input() public set item(val: PtItem) {
         this.item$.next(val);
     }

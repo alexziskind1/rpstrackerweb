@@ -8,6 +8,7 @@ import { PtItem } from '../../../../shared/models/domain';
 import { BacklogService } from '../../backlog.service';
 import { Store } from '../../../../core/app-store';
 import { Observable } from 'rxjs/Observable';
+import { PtNewTask } from '../../../../shared/models';
 
 
 
@@ -20,7 +21,7 @@ export class DetailPageComponent implements OnInit {
 
     public selectedDetailsScreenIndex = 0;
 
-    public item$: Observable<PtItem>;
+    //public item$: Observable<PtItem>;
     public currentSelectedItem$: Observable<PtItem> = this.store.select<PtItem>('currentSelectedItem');
 
     constructor(
@@ -30,7 +31,7 @@ export class DetailPageComponent implements OnInit {
     ) { }
 
     public ngOnInit() {
-        this.item$ = this.store.select<PtItem>('currentSelectedItem');
+        //this.item$ = this.store.select<PtItem>('currentSelectedItem');
         this.backlogService.getItem(parseInt(this.activatedRoute.snapshot.params['id']));
     }
 
@@ -42,5 +43,9 @@ export class DetailPageComponent implements OnInit {
     }
     public onChitchatTap(args) {
         this.selectedDetailsScreenIndex = 2;
+    }
+
+    public onAddNewTask(newTask: PtNewTask) {
+        this.backlogService.addNewPtTask(newTask, this.store.value.currentSelectedItem);
     }
 }
