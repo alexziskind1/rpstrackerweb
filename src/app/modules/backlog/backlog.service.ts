@@ -95,6 +95,15 @@ export class BacklogService {
         );
     }
 
+    public updatePtItem(item: PtItem) {
+        this.repo.updatePtItem(item,
+            this.errorHandlerService.handleHttpError,
+            (updatedItem: PtItem) => {
+                this.getPtItem(item.id);
+            }
+        );
+    }
+
     public addNewPtTask(newTask: PtNewTask, currentItem: PtItem) {
         const task: PtTask = {
             id: 0,

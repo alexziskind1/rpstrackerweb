@@ -43,6 +43,10 @@ export class DetailPageComponent implements OnInit {
         this.selectedDetailsScreenIndex = 2;
     }
 
+    public onItemSaved(item: PtItem) {
+        this.backlogService.updatePtItem(item);
+    }
+
     public onAddNewTask(newTask: PtNewTask) {
         this.backlogService.addNewPtTask(newTask, this.store.value.currentSelectedItem);
     }
