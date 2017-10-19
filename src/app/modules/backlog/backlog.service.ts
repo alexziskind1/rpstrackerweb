@@ -14,6 +14,8 @@ import { ErrorHandlerService } from '../../core/services/error-handler.service';
 import { ObservableInput } from 'rxjs/Observable';
 import { PtNewItem, PtNewTask } from '../../shared/models';
 import { PriorityEnum, StatusEnum } from '../../shared/enums';
+import { BacklogRepository } from './backlog.repository';
+
 
 
 @Injectable()
@@ -23,67 +25,49 @@ export class BacklogService {
         return this.store.value.selectedPreset;
     }
 
-    private get filteredBacklogUrl() {
-        switch (this.currentPreset) {
-            case 'my':
-                const user = this.store.value.currentUser;
-                if (user) {
-                    return `${this.config.apiEndpoint}/myItems?userId=${this.store.value.currentUser.id}`;
-                } else {
-                    return `${this.config.apiEndpoint}/backlog`;
-                }
-            case 'open':
-                return `${this.config.apiEndpoint}/openItems`;
-            case 'closed':
-                return `${this.config.apiEndpoint}/closedItems`;
-            default:
-                return `${this.config.apiEndpoint}/backlog`;
+    private get currentUserId() {
+        if (this.store.value.currentUser) {
+            return this.store.value.currentUser.id;
+        } else {
+            return undefined;
         }
     }
 
     constructor(
-        @Inject(APP_CONFIG) private config: AppConfig,
-        private http: Http,
+        private repo: BacklogRepository,
         private store: Store,
         private errorHandlerService: ErrorHandlerService,
         private zone: NgZone
     ) { }
 
-    private getSingleItemUrl(itemId: number) {
-        return `${this.config.apiEndpoint}/item/${itemId}`;
-    }
-
-    private postSingleItemUrl() {
-        return `${this.config.apiEndpoint}/item`;
-    }
-
-    private postSingleTaskUrl() {
-        return `${this.config.apiEndpoint}/task`;
-    }
 
     public fetchItems() {
-        this.http.get(this.filteredBacklogUrl)
-            .map(res => res.json())
-            .catch(this.errorHandlerService.handleHttpError)
-            .subscribe((data: PtItem[]) => {
-                data.forEach(i => {
-                    i.assignee.avatar = `${this.config.apiEndpoint}/photo/${i.assignee.id}`;
-                });
-                this.store.set('backlogItems', data);
-            });
+        this.repo.getPtItems(
+            this.currentPreset,
+            this.currentUserId,
+            this.errorHandlerService.handleHttpError,
+            (ptItems: PtItem[]) => {
+                this.store.set('backlogItems', ptItems);
+            }
+        );
     }
 
-    public getItem(id: number) {
-        let selectedItem = _.find(this.store.value.backlogItems, i => i.id === id);
+
+    public getPtItem(id: number) {
+        this.repo.getPtItem(id,
+            this.errorHandlerService.handleHttpError,
+            (ptItem: PtItem) => {
+                this.store.set('currentSelectedItem', ptItem);
+            }
+        );
+    }
+
+    public getItemFromCacheOrServer(id: number) {
+        const selectedItem = _.find(this.store.value.backlogItems, i => i.id === id);
         if (selectedItem) {
             this.store.set('currentSelectedItem', selectedItem);
         } else {
-            this.http.get(this.getSingleItemUrl(id))
-                .map(res => res.json())
-                .catch(this.errorHandlerService.handleHttpError)
-                .subscribe((data: PtItem) => {
-                    this.store.set('currentSelectedItem', data);
-                });
+            this.getPtItem(id);
         }
     }
 
@@ -102,10 +86,14 @@ export class BacklogService {
             dateCreated: new Date(),
             dateModified: new Date()
         };
-        this._addItem(item);
+        this.repo.insertPtItem(
+            item,
+            this.errorHandlerService.handleHttpError,
+            (nextItem: PtItem) => {
+                this.store.set('backlogItems', [...this.store.value.backlogItems, nextItem]);
+            }
+        );
     }
-
-
 
     public addNewPtTask(newTask: PtNewTask, currentItem: PtItem) {
         const task: PtTask = {
@@ -115,31 +103,41 @@ export class BacklogService {
             dateCreated: new Date(),
             dateModified: new Date()
         };
-        this._addTask(task, currentItem);
+        this.repo.insertPtTask(
+            task,
+            currentItem.id,
+            this.errorHandlerService.handleHttpError,
+            (nextTask: PtTask) => {
+                this.getPtItem(currentItem.id);
+                console.log(nextTask);
+            }
+        );
     }
 
-    private _addItem(item: PtItem) {
-        this.http.post(
-            this.postSingleItemUrl(),
-            { item: item }
-        )
-            .map(res => res.json())
-            .catch(this.errorHandlerService.handleHttpError)
-            .subscribe(next => {
-                this.store.set('backlogItems', [...this.store.value.backlogItems, next]);
-            });
+    public togglePtTask(task: PtTask, currentItem: PtItem) {
+        const taskToUpdate: PtTask = {
+            id: task.id,
+            title: task.title,
+            completed: !task.completed,
+            dateCreated: task.dateCreated,
+            dateModified: new Date()
+        };
+
+        const updatedTasks = currentItem.tasks.map(t => {
+            if (t.id === task.id) { return taskToUpdate; } else { return t; }
+        });
+
+        const updatedItem = Object.assign({}, currentItem, { tasks: updatedTasks });
+
+        // Optimistically update local item
+        this.store.set('currentSelectedItem', updatedItem);
+
+        this.repo.updatePtTask(taskToUpdate, currentItem.id,
+            this.errorHandlerService.handleHttpError,
+            (updatedTask: PtTask) => {
+                this.getPtItem(currentItem.id);
+            }
+        );
     }
 
-    private _addTask(task: PtTask, currentItem: PtItem) {
-        this.http.post(
-            this.postSingleTaskUrl(),
-            { task: task, itemId: currentItem.id }
-        )
-            .map(res => res.json())
-            .catch(this.errorHandlerService.handleHttpError)
-            .subscribe(next => {
-                this.getItem(currentItem.id);
-                console.log(next);
-            });
-    }
 }

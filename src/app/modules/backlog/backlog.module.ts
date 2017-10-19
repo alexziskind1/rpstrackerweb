@@ -10,6 +10,7 @@ import { PtListComponent, PtListItemComponent } from './components/backlog';
 import { PtItemDetailsComponent, PtItemChitchatComponent, PtItemTasksComponent } from './components/detail';
 import { SharedModule } from '../../shared/shared.module';
 import { NewItemFormComponent } from './components/new-item-form/new-item-form.component';
+import { BacklogRepository } from './backlog.repository';
 
 
 
@@ -31,6 +32,7 @@ import { NewItemFormComponent } from './components/new-item-form/new-item-form.c
         NewItemFormComponent
     ],
     providers: [
+        BacklogRepository,
         BacklogService
     ],
 })

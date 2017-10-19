@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { PtItem } from '../../../../shared/models/domain';
+import { PtItem, PtTask } from '../../../../shared/models/domain';
 import { BacklogService } from '../../backlog.service';
 import { Store } from '../../../../core/app-store';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +21,6 @@ export class DetailPageComponent implements OnInit {
 
     public selectedDetailsScreenIndex = 0;
 
-    //public item$: Observable<PtItem>;
     public currentSelectedItem$: Observable<PtItem> = this.store.select<PtItem>('currentSelectedItem');
 
     constructor(
@@ -31,8 +30,7 @@ export class DetailPageComponent implements OnInit {
     ) { }
 
     public ngOnInit() {
-        //this.item$ = this.store.select<PtItem>('currentSelectedItem');
-        this.backlogService.getItem(parseInt(this.activatedRoute.snapshot.params['id']));
+        this.backlogService.getItemFromCacheOrServer(parseInt(this.activatedRoute.snapshot.params['id'], 10));
     }
 
     public onDetailsTap(args) {
@@ -47,5 +45,9 @@ export class DetailPageComponent implements OnInit {
 
     public onAddNewTask(newTask: PtNewTask) {
         this.backlogService.addNewPtTask(newTask, this.store.value.currentSelectedItem);
+    }
+
+    public onToggleTask(task: PtTask) {
+        this.backlogService.togglePtTask(task, this.store.value.currentSelectedItem);
     }
 }

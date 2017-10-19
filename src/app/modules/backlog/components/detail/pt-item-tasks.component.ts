@@ -9,6 +9,14 @@ import { PtNewTask } from '../../../../shared/models';
 @Component({
     selector: 'pt-item-tasks',
     templateUrl: 'pt-item-tasks.component.html',
+    styles: [
+        `
+            .task-checkbox {
+                width: 20px;
+                height: 20px;
+            }
+        `
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -18,25 +26,31 @@ export class PtItemTasksComponent implements OnInit {
         this.tasks = val.tasks;
     }
     @Output() addNewTask = new EventEmitter<PtNewTask>();
+    @Output() toggleTask = new EventEmitter<PtTask>();
 
     public tasks: PtTask[] = [];
 
-    public newTaskTitle: string = '';
+    public newTaskTitle = '';
 
     constructor() { }
 
     public ngOnInit() { }
 
     public onAddTapped(args) {
-        let newTitle = this.newTaskTitle.trim();
-        if (newTitle.length === 0)
+        const newTitle = this.newTaskTitle.trim();
+        if (newTitle.length === 0) {
             return;
-        let newTask: PtNewTask = {
+        }
+        const newTask: PtNewTask = {
             title: newTitle,
             completed: false
         };
         this.addNewTask.emit(newTask);
         this.newTaskTitle = '';
-        //newTaskTV.dismissSoftInput();
+        // newTaskTV.dismissSoftInput();
+    }
+
+    public toggleTapped(task: PtTask) {
+        this.toggleTask.emit(task);
     }
 }

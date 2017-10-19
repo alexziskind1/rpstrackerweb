@@ -32,7 +32,7 @@ export class BacklogPageComponent implements OnInit {
 
     public ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
-            var reqPreset = params['preset'];
+            const reqPreset = params['preset'];
             if (reqPreset) {
                 this.store.set('selectedPreset', reqPreset);
             }
@@ -46,7 +46,6 @@ export class BacklogPageComponent implements OnInit {
     }
 
     public selectListItem(item: PtItem) {
-        console.log('item sell: ' + item.title);
         this.navigationService.navigate(['/detail', item.id]);
     }
 
