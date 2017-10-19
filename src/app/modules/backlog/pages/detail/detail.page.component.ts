@@ -8,7 +8,7 @@ import { PtItem, PtTask } from '../../../../shared/models/domain';
 import { BacklogService } from '../../backlog.service';
 import { Store } from '../../../../core/app-store';
 import { Observable } from 'rxjs/Observable';
-import { PtNewTask } from '../../../../shared/models';
+import { PtNewTask, PtNewComment } from '../../../../shared/models';
 
 
 
@@ -53,5 +53,9 @@ export class DetailPageComponent implements OnInit {
 
     public onToggleTask(task: PtTask) {
         this.backlogService.togglePtTask(task, this.store.value.currentSelectedItem);
+    }
+
+    public onAddNewComment(newComment: PtNewComment) {
+        this.backlogService.addNewPtComment(newComment, this.store.value.currentSelectedItem);
     }
 }

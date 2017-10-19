@@ -9,10 +9,10 @@ import { Http } from '@angular/http';
 import { AppConfig, APP_CONFIG } from '../../app-config.module';
 import { Hero } from '../../shared/models/hero';
 import { Store } from '../../core/app-store';
-import { PtItem, PtUser, PtTask } from '../../shared/models/domain';
+import { PtItem, PtUser, PtTask, PtComment } from '../../shared/models/domain';
 import { ErrorHandlerService } from '../../core/services/error-handler.service';
 import { ObservableInput } from 'rxjs/Observable';
-import { PtNewItem, PtNewTask } from '../../shared/models';
+import { PtNewItem, PtNewTask, PtNewComment } from '../../shared/models';
 import { PriorityEnum, StatusEnum } from '../../shared/enums';
 import { BacklogRepository } from './backlog.repository';
 
@@ -145,6 +145,25 @@ export class BacklogService {
             this.errorHandlerService.handleHttpError,
             (updatedTask: PtTask) => {
                 this.getPtItem(currentItem.id);
+            }
+        );
+    }
+
+    public addNewPtComment(newComment: PtNewComment, currentItem: PtItem) {
+        const comment: PtComment = {
+            id: 0,
+            title: newComment.title,
+            user: this.store.value.currentUser,
+            dateCreated: new Date(),
+            dateModified: new Date()
+        };
+        this.repo.insertPtComment(
+            comment,
+            currentItem.id,
+            this.errorHandlerService.handleHttpError,
+            (nextComment: PtComment) => {
+                this.getPtItem(currentItem.id);
+                console.log(nextComment);
             }
         );
     }

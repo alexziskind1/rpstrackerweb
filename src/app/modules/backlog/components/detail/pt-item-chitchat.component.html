@@ -1,4 +1,9 @@
-<h2>Pt item chichat</h2>
+<h2>Chichat</h2>
+
+<div>
+    <input [(ngModel)]="newComment" placeholder="Enter new comment..." />
+    <button (click)="onAddTapped($event)">add</button>
+</div>
 
 <ul>
     <li *ngFor="let comment of comments">

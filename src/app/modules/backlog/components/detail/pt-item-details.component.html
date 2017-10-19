@@ -12,14 +12,21 @@
 
 
 <app-dialog [(visible)]="showDialog">
-    <h1>{{ editDialogName }}</h1>
-
-    <div *ngIf="editingTitle">
-        <input [(ngModel)]="item.title" />
-    </div>
-
-    <div *ngIf="editingDescription">
-        <input [(ngModel)]="item.description" />
+    <div [ngSwitch]="editingProp">
+        <ng-template [ngSwitchCase]="'title'">
+            <h1>Edit Title</h1>
+            <div>
+                <label>Title</label>
+                <input [(ngModel)]="item.title" />
+            </div>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'description'">
+            <h1>Edit Description</h1>
+            <div>
+                <label>Description</label>
+                <input [(ngModel)]="item.description" />
+            </div>
+        </ng-template>
     </div>
 
     <button (click)="onDialogSaveTap($event)" class="btn">Save</button>

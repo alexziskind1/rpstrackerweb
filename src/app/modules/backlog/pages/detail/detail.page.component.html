@@ -10,5 +10,5 @@
     <pt-item-details [item]="currentSelectedItem$ | async" (itemSaved)="onItemSaved($event)" *ngIf="selectedDetailsScreenIndex=== 0"></pt-item-details>
     <pt-item-tasks [item]="currentSelectedItem$ | async" (addNewTask)="onAddNewTask($event)" (toggleTask)="onToggleTask($event)"
         *ngIf="selectedDetailsScreenIndex=== 1"></pt-item-tasks>
-    <pt-item-chitchat [item]="currentSelectedItem$ | async" *ngIf="selectedDetailsScreenIndex=== 2"></pt-item-chitchat>
+    <pt-item-chitchat [item]="currentSelectedItem$ | async" (addNewComment)="onAddNewComment($event)" *ngIf="selectedDetailsScreenIndex=== 2"></pt-item-chitchat>
 </div>

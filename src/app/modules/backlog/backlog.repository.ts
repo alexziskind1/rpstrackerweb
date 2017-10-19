@@ -5,7 +5,7 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { APP_CONFIG, AppConfig } from '../../app-config.module';
 import { Preset } from '../../shared/models/ui';
-import { PtTask, PtItem } from '../../shared/models/domain';
+import { PtTask, PtItem, PtComment } from '../../shared/models/domain';
 
 
 
@@ -53,6 +53,14 @@ export class BacklogRepository {
 
     private putPtTaskUrl(taskId: number) {
         return `${this.config.apiEndpoint}/task/${taskId}`;
+    }
+
+    private postPtCommentUrl() {
+        return `${this.config.apiEndpoint}/comment`;
+    }
+
+    private deletePtCommentUrl(commentId: number) {
+        return `${this.config.apiEndpoint}/comment/${commentId}`;
     }
 
     public getPtItems(
@@ -137,6 +145,32 @@ export class BacklogRepository {
             this.putPtTaskUrl(task.id),
             { task: task, itemId: ptItemId }
         )
+            .map(res => res.json())
+            .catch(errorHandler)
+            .subscribe(successHandler);
+    }
+
+    public insertPtComment(
+        comment: PtComment,
+        ptItemId: number,
+        errorHandler: (error: any) => ErrorObservable,
+        successHandler: (nextComment: PtComment) => void
+    ) {
+        this.http.post(
+            this.postPtCommentUrl(),
+            { comment: comment, itemId: ptItemId }
+        )
+            .map(res => res.json())
+            .catch(errorHandler)
+            .subscribe(successHandler);
+    }
+
+    public deletePtComment(
+        ptCommentId: number,
+        errorHandler: (error: any) => ErrorObservable,
+        successHandler: () => void
+    ) {
+        this.http.delete(this.deletePtCommentUrl(ptCommentId))
             .map(res => res.json())
             .catch(errorHandler)
             .subscribe(successHandler);
