@@ -10,6 +10,7 @@ import { PtUser } from '../../shared/models/domain';
 import { PtLoginModel, PtAuthToken } from '../../shared/models';
 import { Store } from '../app-store';
 import { AppConfig, APP_CONFIG } from '../../app-config.module';
+import { ErrorHandlerService } from './error-handler.service';
 
 const AUTH_TOKEN_KEY = 'AUTH_TOKEN_KEY';
 
@@ -31,7 +32,8 @@ export class AuthService {
         @Inject(APP_CONFIG) private config: AppConfig,
         private http: Http,
         private store: Store,
-        private storageService: StorageService
+        private storageService: StorageService,
+        private errorHandlerService: ErrorHandlerService
     ) { }
 
     public isLoggedIn(): boolean {
@@ -60,17 +62,12 @@ export class AuthService {
             .map(response => response.json())
             .do(data => {
                 this.store.set<PtUser>('currentUser', data.user);
-                this.token = data.authToken.access_token;
+                this.token = data.authToken;
             })
-            .catch(this.handleErrors);
+            .catch(this.errorHandlerService.handleHttpError);
     }
 
     public logout() {
         this.storageService.setItem(AUTH_TOKEN_KEY, '');
-    }
-
-    handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
-        return Observable.throw(error);
     }
 }
