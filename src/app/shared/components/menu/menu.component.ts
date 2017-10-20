@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
     }
 
     public onLogoutTap(args) {
-        this.navigationService.navigate(['/logout']);
+        this.navigationService.navigate(['/auth/logout']);
     }
 
 }

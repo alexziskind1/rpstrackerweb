@@ -1,0 +1,15 @@
+<h1 class="title" [innerText]="'modules.auth.pages.auth.login' | translate"></h1>
+
+<form #loginForm="ngForm" class="tab-content">
+    <div class="form-input-field">
+        <input placeholder="Email" #emailModel="ngModel" name="email" type="email" [(ngModel)]="email" required email>
+    </div>
+    <br/>
+    <div class="form-input-field">
+        <input placeholder="Password" #passwordModel="ngModel" name="password" [(ngModel)]="password" type="password" required>
+    </div>
+    <br/>
+
+    <button color="primary" [disabled]="loginForm.invalid" (click)="onLoginTap(loginForm.valid)" type="submit" [innerText]="'modules.auth.pages.auth.login' | translate">
+    </button>
+</form>

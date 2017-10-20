@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/switchMap';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Component, OnInit } from '@angular/core';

@@ -1,3 +1,4 @@
+/*
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../../../../core/services/auth.service';
@@ -26,3 +27,4 @@ export class LogoutPageComponent implements OnInit {
     }
 
 }
+*/

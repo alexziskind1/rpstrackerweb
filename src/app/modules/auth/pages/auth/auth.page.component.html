@@ -1,0 +1,13 @@
+<div>
+    <button routerLink="/auth/login" [innerText]="'modules.auth.pages.auth.login' | translate"></button>
+    <button routerLink="/auth/register" [innerText]="'modules.auth.pages.auth.register' | translate"></button>
+</div>
+
+<div [ngSwitch]="action">
+    <ng-template [ngSwitchCase]="'login'">
+        <pt-login-form (loginInitiated)="onLogin($event)"></pt-login-form>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'register'">
+        <pt-register-form (registerInitiated)="onRegister($event)"></pt-register-form>
+    </ng-template>
+</div>

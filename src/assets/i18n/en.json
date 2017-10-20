@@ -2,8 +2,9 @@
     "modules": {
         "auth": {
             "pages": {
-                "login": {
-                    "login": "Login"
+                "auth": {
+                    "login": "Login_",
+                    "register": "Register_"
                 }
             }
         }

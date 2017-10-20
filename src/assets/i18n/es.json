@@ -2,8 +2,9 @@
     "modules": {
         "auth": {
             "pages": {
-                "login": {
-                    "login": "Iniciar"
+                "auth": {
+                    "login": "Incenar",
+                    "register": "Registrar"
                 }
             }
         }
