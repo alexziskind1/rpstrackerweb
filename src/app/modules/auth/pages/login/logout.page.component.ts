@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from '../../../core/services/auth.service';
-import { NavigationService } from '../../../core/services/navigation.service';
+import { AuthService } from '../../../../core/services/auth.service';
+import { NavigationService } from '../../../../core/services/navigation.service';
 
 
 @Component({

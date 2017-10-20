@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NavigationService } from '../../../core/services/navigation.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { PtUser } from '../../../shared/models/domain';
+import { AuthService } from '../../../../core/services/auth.service';
+import { NavigationService } from '../../../../core/services/navigation.service';
+import { PtUser } from '../../../../shared/models/domain';
 
 
 @Component({
@@ -40,7 +40,7 @@ export class LoginPageComponent implements OnInit {
         if (isValid) {
             this.userService.register(this.email, this.password, this.displayName)
                 .then(user => {
-                    this.navigationService.navigate(['/home'], { clearHistory: true });
+                    this.navigationService.navigate(['/backlog'], { clearHistory: true });
                 });
         }
     }
@@ -49,17 +49,4 @@ export class LoginPageComponent implements OnInit {
     public logout() {
         this.authService.logout();
     }
-
-    /*
-    public update() {
-        this.authService.updateUserDetails({
-            displayName: this.displayName,
-            photoURL: null,
-            email: this.email
-        });
-    }
-
-    public reset() {
-        this.authService.resetPassword(email);
-    }*/
 }

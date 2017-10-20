@@ -3,7 +3,7 @@
         "auth": {
             "pages": {
                 "login": {
-                    "login": "Login"
+                    "login": "Iniciar"
                 }
             }
         }

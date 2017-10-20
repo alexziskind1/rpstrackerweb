@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { BacklogService } from './modules/backlog/backlog.service';
-import { AuthService } from './core/services/auth.service';
+
 import { Store } from './core/app-store';
 import { PtUser } from './shared/models/domain';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +11,9 @@ import { PtUser } from './shared/models/domain';
     `
 })
 export class AppComponent {
-  constructor(
-    private authService: AuthService
-  ) {
-    // authService.login({ username: 'alex', password: 'nuvious' });
+  constructor(translate: TranslateService) {
+    translate.setDefaultLang('en');
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|es/) ? browserLang : 'en');
   }
 }
