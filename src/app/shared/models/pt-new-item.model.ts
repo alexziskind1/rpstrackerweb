@@ -1,4 +1,4 @@
-import { ItemTypeEnum } from "../enums";
+import { ItemTypeEnum } from '../enums';
 
 export interface PtNewItem {
     title: string;
