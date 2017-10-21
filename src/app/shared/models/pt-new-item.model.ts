@@ -5,4 +5,3 @@ export interface PtNewItem {
     description?: string;
     type: ItemTypeEnum;
 }
-
