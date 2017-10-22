@@ -2,16 +2,15 @@ import * as _ from 'lodash';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable, ObservableInput } from 'rxjs/Observable';
 
 import { Injectable, Inject, NgZone } from '@angular/core';
-import { Http } from '@angular/http';
+
 import { AppConfig, APP_CONFIG } from '../../app-config.module';
 import { Hero } from '../../shared/models/hero';
 import { Store } from '../../core/app-store';
 import { PtItem, PtUser, PtTask, PtComment } from '../../shared/models/domain';
 import { ErrorHandlerService } from '../../core/services/error-handler.service';
-import { ObservableInput } from 'rxjs/Observable';
 import { PtNewItem, PtNewTask, PtNewComment } from '../../shared/models';
 import { PriorityEnum, StatusEnum } from '../../shared/enums';
 import { BacklogRepository } from './backlog.repository';
